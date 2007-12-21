@@ -26,6 +26,7 @@ BuildRequires:	perl(PadWalker)
 BuildRequires:	perl(Test::use::ok)
 Requires:	perl >= 5.8.1
 BuildArch:	noarch
+Buildroot:	%{_tmppath}/%{name}-root
 
 %description
 This plugin lets you put your lexicals on the stash and elsewhere very
