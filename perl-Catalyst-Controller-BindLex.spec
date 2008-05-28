@@ -2,9 +2,9 @@
 %define name	perl-%{realname}
 %define	modprefix Catalyst
 
-%define version	0.03
+%define version	0.05
 
-%define release	%mkrel 2
+%define release	%mkrel 1
 
 Summary:	Stash your lexical goodness
 Name:		%{name}
@@ -24,9 +24,8 @@ BuildRequires:	perl(Devel::LexAlias)
 BuildRequires:	perl(Module::Build)
 BuildRequires:	perl(PadWalker)
 BuildRequires:	perl(Test::use::ok)
-Requires:	perl >= 5.8.1
 BuildArch:	noarch
-Buildroot:	%{_tmppath}/%{name}-root
+Buildroot:	%{_tmppath}/%{name}-%{version}
 
 %description
 This plugin lets you put your lexicals on the stash and elsewhere very
@@ -46,15 +45,15 @@ subs. This is almost like sharing your lexical scope.
 %setup -q -n %{realname}-%{version}
 
 %build
-%__perl Build.PL installdirs=vendor
-./Build
+%__perl Makefile.PL INSTALLDIRS=vendor
+%make
 
 %check
-./Build test
+%__make test
 
 %install
-[ "%{buildroot}" != "/" ] && rm -rf %{buildroot}
-./Build install destdir=%{buildroot}
+rm -rf %{buildroot}
+%makeinstall_std
 
 %files
 %defattr(-,root,root)
