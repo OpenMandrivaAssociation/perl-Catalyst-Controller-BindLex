@@ -4,7 +4,7 @@
 
 %define version	0.05
 
-%define release	%mkrel 1
+%define release	%mkrel 2
 
 Summary:	Stash your lexical goodness
 Name:		%{name}
