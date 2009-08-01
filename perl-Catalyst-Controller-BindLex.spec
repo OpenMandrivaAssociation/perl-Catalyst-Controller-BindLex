@@ -1,19 +1,16 @@
-%define realname Catalyst-Controller-BindLex
-%define name	perl-%{realname}
-%define	modprefix Catalyst
+%define upstream_name    Catalyst-Controller-BindLex
+%define upstream_version 0.05
 
-%define version	0.05
-
-%define release	%mkrel 2
+Name:       perl-%{upstream_name}
+Version:    %perl_convert_version %{upstream_version}
+Release:    %mkrel 1
 
 Summary:	Stash your lexical goodness
-Name:		%{name}
-Version:	%{version}
-Release:	%{release}
 License:	Artistic/GPL
 Group:		Development/Perl
-URL:		http://search.cpan.org/dist/%{realname}/
-Source:		ftp://ftp.perl.org/pub/CPAN/modules/by-module/%{modprefix}/%{realname}-%{version}.tar.bz2
+Url:		http://search.cpan.org/dist/%{upstream_name}/
+Source0:	ftp://ftp.perl.org/pub/CPAN/modules/by-module/Catalyst/%{upstream_name}-%{upstream_version}.tar.bz2
+
 %if %{mdkversion} < 1010
 BuildRequires:	perl-devel >= 5.8.1
 %endif
@@ -25,7 +22,7 @@ BuildRequires:	perl(Module::Build)
 BuildRequires:	perl(PadWalker)
 BuildRequires:	perl(Test::use::ok)
 BuildArch:	noarch
-Buildroot:	%{_tmppath}/%{name}-%{version}
+Buildroot:	%{_tmppath}/%{name}-%{version}-%{release}
 
 %description
 This plugin lets you put your lexicals on the stash and elsewhere very
@@ -42,7 +39,7 @@ subs. This is almost like sharing your lexical scope.
 
 
 %prep
-%setup -q -n %{realname}-%{version}
+%setup -q -n %{upstream_name}-%{upstream_version}
 
 %build
 %__perl Makefile.PL INSTALLDIRS=vendor
@@ -55,12 +52,11 @@ subs. This is almost like sharing your lexical scope.
 rm -rf %{buildroot}
 %makeinstall_std
 
+%clean
+rm -rf %{buildroot}
+
 %files
 %defattr(-,root,root)
 %doc Changes README
 %{_mandir}/*/*
-%{perl_vendorlib}/%{modprefix}
-
-%clean
-rm -rf %{buildroot}
-
+%{perl_vendorlib}/Catalyst
